@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <script src="{{url_for('static', filename='init.js')}}"></script>
+    <script src="{{url_for('static', filename='videoroom_checkpoint.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='chatroom.css')}}">
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Chat [{{room_id}}]</title>
+</head>
+<body>
+
+    <div class="heading mb-4">
+        <center>
+            <h4>You are about to join room: <span>{{room_id}}</span></h4>
+        </center>
+    </div>
+
+    <div class="container text-center mt-5">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+
+                <div id="permission_alert" class="alert alert-danger" role="alert" style="display: none; background-color: rgb(255, 130, 130); color: rgb(153, 32, 32);">
+                    <strong>Please allow camera and mic permissions!</strong> 
+                </div>
+
+                <div class="shadow p-0">
+
+                    <div class="vid-wrapper_local" style="width: 100%; background-color: rgb(20,20,20);">
+                        <video id="local_vid_check_point" autoplay muted style="max-height: 400px; max-width: 100%;"></video>
+                    </div>
+
+                    <div class="p-3 w-100 bg-light" >
+
+                        <button id="bttn_mute" class="btn btn-lg btn-outline-secondary rounded-circle mx-3">
+                            <span id="mute_icon" class="material-icons pt-2">
+                                mic
+                            </span>
+                        </button>
+
+                        <button id="bttn_vid_mute"class="btn btn-lg btn-outline-secondary rounded-circle mx-3">
+                            <span id="vid_mute_icon" class="material-icons pt-2">
+                                videocam
+                            </span>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+                <form method="POST" onsubmit="return validate()">
+                    <input type="submit" value="Join" class="btn btn-primary">
+                    <input type="button" value="Cancel" onclick="cancel()" class="btn btn-primary">
+                    <input type="hidden"  name="user_name" id="user_name"/>
+                    <input type="hidden" value="0" name="mute_audio" id="mute_audio_inp">
+                    <input type="hidden" value="0" name="mute_video" id="mute_video_inp">
+                </form>
+        </div>
+
+        
+    </div>
+</body>
+</html>

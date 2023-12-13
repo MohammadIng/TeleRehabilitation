@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='chatroom.css')}}">
+    <script src="{{url_for('static', filename='init.js')}}"></script>
+
+
+
+    <script type="text/javascript">
+        var myRoomID = "{{room_id}}";
+        var userType = "{{user_type}}";
+        var myName = "{{user_name}}";
+        var audioMuted = "{{mute_audio}}"=="1";
+        var videoMuted = "{{mute_video}}"=="1";
+    </script>
+
+    <script src="{{url_for('static', filename='videoroom_therapist.js')}}"></script>
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoRoom Therapist [{{room_id}}]</title>
+</head>
+<body>
+
+    <div class="heading mb-4">
+        <div class="room-info">
+            <h3>you are the therapist in the Room: <span>{{room_id}}</span></h3>
+        </div>
+    </div>
+
+    <div class="container-fluid px-0 mx-0">
+        <div id="video_grid" class="video-grid"></div>
+    </div>
+
+    <div id= "patientsData"></div>
+
+    <div id="inline">
+        <div id="analysisData"></div>
+        <div id= "comparisonTable" ></div>
+    </div>
+
+    <div id="div_local_vid" class="col-5 col-md-4 col-lg-3 video-item ml-auto">
+            <video id="local_vid_therapist" autoplay muted></video>
+    </div>
+
+    <div id="control_box" class="row control-box shadow">
+
+        <div class="col-7 col-md-8 col-lg-9 d-flex justify-content-around align-items-center button-box">
+
+            <button id="bttn_mute" class="btn btn-lg btn-outline-secondary rounded-circle" style="margin-left: 60px;">
+                <span id="mute_icon" class="material-icons pt-2">
+                    mic
+                </span>
+            </button>
+
+            <button id="bttn_vid_mute"class="btn btn-lg btn-outline-secondary rounded-circle" style="margin-left: 60px;" >
+                <span id="vid_mute_icon" class="material-icons pt-2">
+                    videocam
+                </span>
+            </button>
+
+            <button id="call_end" class="btn btn-lg btn-danger rounded-circle" style="margin-left: 60px;">
+                <span class="material-icons pt-2">
+                    call_end
+                </span>
+            </button>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

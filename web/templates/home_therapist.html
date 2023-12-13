@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+     <script src="{{ url_for('static', filename='init.js') }}"></script>
+     <script src="{{ url_for('static', filename='home_therapist.js') }}"></script>
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage Therapist</title>
+</head>
+<body>
+
+    <div class="heading mb-4">
+        <h1 class="display-4">Yor are logged as therapist im system</h1>
+    </div>
+      <button class="btn btn-primary" style="float: right;" type="button" id="logout1-button" onclick="logout()" >Logout</button>
+     <br>
+    <div class="container text-center mt-5">
+        <ul class="nav nav-tabs" id="myTabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#videoroomsTabs">Videorooms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#exercisesTabs">Exercises</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="videoroomsTabs">
+                <div class="row">
+
+                    <div class="col">
+                        <h5>Start Video Room</h5>
+                        <form id="room_form" method="POST" class="form shadow" style="max-width:400px; margin-left: auto; margin-right: auto;">
+                              <select name="room_id" id="room_id" class="form-control" required>
+                                {% for room in  rooms %}
+                                    <option value="{{ room.name }}">{{ room.name }}</option>
+                                {% endfor %}
+                              </select>
+                              <input type="submit" value="Start" class="btn btn-primary">
+                        </form>
+                    </div>
+
+                    <div class="col">
+                        <h5>Create Video Room</h5>
+                        <form class="form shadow" style="max-width:400px; margin-left: auto; margin-right: auto;">
+                                <input type="text" name="room_name" id="room_name" class="form-control" placeholder="Room Name" autofocus required>
+                                <input type="text" name="room_description" id="room_description" class="form-control" placeholder="description" autofocus required>
+                                <input type="button" value="Create" onclick="createVideoconference()" class="btn btn-primary">
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="exercisesTabs">
+
+                <table>Users</table>
+                <div id="userTableContainer"></div>
+                <br>
+
+                <table>Exercises</table>
+                <div id="exerciseTableContainer"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

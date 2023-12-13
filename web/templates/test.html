@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Chat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .video-container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+            background: #111111;
+            left: 20px;
+        }
+        #local_vid_patient {
+            width: 100%;
+            height: 100%;
+            background-color: #dddddd;
+        }
+        #smallVideo {
+            position: absolute;
+            bottom: 50px;
+            right: 0px;
+            width: 210px;
+            height: 210px;
+            z-index: 0;
+        }
+
+
+        .button-container {
+            position: absolute;
+            bottom: -20px;
+            left: 10px;
+            z-index: 2;
+        }
+
+        .button-container button {
+            ;
+        }
+    </style>
+
+    <script>
+        navigator.mediaDevices.getUserMedia({
+                                    audio: true,
+                                    video: {
+                                        height: 360
+                                    }
+                                })
+        .then((stream)=>{
+            document.getElementById("local_vid_patient").srcObject = stream;
+            this.setCameraAllowed(true)
+        })
+        .catch((e)=>{
+            this.setCameraAllowed(false)
+            console.log("Error! Unable to start video! ", e);
+            document.getElementById("permission_alert").style.display = "block";
+        });
+
+        navigator.mediaDevices.getUserMedia({
+                                    audio: true,
+                                    video: {
+                                        height: 360
+                                    }
+                                })
+        .then((stream)=>{
+            document.getElementById("smallVideo").srcObject = stream;
+            this.setCameraAllowed(true)
+        })
+        .catch((e)=>{
+            this.setCameraAllowed(false)
+            console.log("Error! Unable to start video! ", e);
+            document.getElementById("permission_alert").style.display = "block";
+        });
+
+        document.addEventListener("DOMContentLoaded", (event)=> {
+
+        });
+
+    </script>
+</head>
+<body>
+    <div class="video-container">
+        <video id="local_vid_patient" autoplay muted></video>
+        <video id="smallVideo" autoplay muted></video>
+
+        <div class="button-container">
+                    <button id="bttn_mute" class="btn btn-lg btn-outline-secondary rounded-circle">
+                        <span id="mute_icon" class="material-icons pt-2">
+                            mic
+                        </span>
+                    </button>
+
+                    <button id="bttn_vid_mute" class="btn btn-lg btn-outline-secondary rounded-circle">
+                        <span id="vid_mute_icon" class="material-icons pt-2">
+                            videocam
+                        </span>
+                    </button>
+
+                    <button id="call_end" class="btn btn-lg btn-danger rounded-circle">
+                        <span class="material-icons pt-2">
+                            call_end
+                        </span>
+                    </button>
+                </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='chatroom.css')}}">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.1/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.2/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1/hands.js" crossorigin="anonymous"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+                <div id="clockContainer">
+                    <div id="second"></div>
+                </div>
+
+
+
+                <div id="permission_alert" class="alert alert-danger" role="alert" style="display: none; background-color: rgb(255, 130, 130); color: rgb(153, 32, 32);">
+                    <strong>Please allow camera and mic permissions!</strong>
+                </div>
+
+
+                <div class="video-container">
+                    <div id="textContainer">get ready to start</div>
+                    <video id="local_vid_patient" autoplay muted style="display: none"></video>
+                    <canvas class="output" ></canvas>
+
+                    <select id = "evaluatioType">
+                        <option id ="" >select evaluation type </option>
+                        <option value="handDetect">Hand detect</option>
+                        <option value="lightRoom">Light Room</option>
+                        <option value="rotationX">Rotation X</option>
+                        <option value="rotationY">Rotation Y</option>
+                        <option value="handVisibility">Hand Visibility</option>
+                        <option value="handCameraDistance">Distance Hand Camera</option>
+                    </select>
+
+
+                </div>
+
+                <div id="currentExerciseTable" style="margin-left: 1000px"></div>
+                <div id="resultTable" style="margin-top: 190px; width: 75%"></div>
+                <div id="analysisData" style="margin-top: 0px; width: 75%"></div>
+
+
+
+
+
+
+
+
+    <video id="videoCamera" autoplay style="display: none"></video>
+    <div style="visibility: hidden;" class="control">  </div>
+
+     <div id="analysisData"></div>
+
+
+    <script src="{{url_for('static', filename='evaluation.js')}}"></script>
+
+
+    <script type="text/javascript">
+        let user = EvluationUser.initUser()
+        user.setUsername("xx")
+
+        const localHand =new Hand()
+        localHand.start()
+        var exercises;
+        user.getMyExercises()
+        user.getSocket().on("eventGetMyExercises", (data) => {
+            console.log("data  " + data)
+            exercises = data
+            localHand.getExercisesToPatients(user.getSocket(),exercises)
+        });
+
+
+
+        function startCountdown(duration){
+            let timer =
+                setInterval(() => {
+                    second.style.transform = `rotate(${6 * duration}deg)`;
+                    duration-=1
+                        if(duration<0){
+                            clearInterval(timer)
+                            localHand.getExercisesToPatients(user.getSocket(),exercises)
+                        }
+                    }, 1000);
+        }
+
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='chatroom.css')}}">
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.1/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.2/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1/hands.js" crossorigin="anonymous"></script>
+
+
+
+    <script type="text/javascript">
+        var myRoomID = "{{room_id}}";
+        var userType = "{{user_type}}";
+        var myName = "{{user_name}}";
+        var audioMuted = "{{mute_audio}}"=="1";
+        var videoMuted = "{{mute_video}}"=="1";
+    </script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoRoom Patient [{{room_id}}]</title>
+</head>
+<body>
+
+        <div class="heading mb-4">
+            <div class="room-info">
+                <h5>you are now in the video room: <span >{{room_id}}</span></h5>
+            </div>
+        </div>
+
+
+        <div id="permission_alert" class="alert alert-danger" role="alert" style="display: none; background-color: rgb(255, 130, 130); color: rgb(153, 32, 32);">
+            <strong>Please allow camera and mic permissions!</strong>
+        </div>
+
+        <div id="clockContainer">
+            <div id="second"></div>
+        </div>
+
+
+        <div class="video-container">
+
+            <div id="textContainer">get ready to start</div>
+            <video id="local_vid_patient" autoplay muted controls ></video>
+            <canvas class="output" style="display: none" ></canvas>
+            <video id="vid_therapist" autoplay controls></video>
+
+
+            <div class="p-3 w-100 bg-light ">
+
+                <button id="bttn_mute" class="btn btn-lg btn-outline-secondary rounded-circle" style="margin-left: 30px;">
+                    <span id="mute_icon" class="material-icons pt-2">
+                        mic
+                    </span>
+                </button>
+
+                <button id="bttn_vid_mute"class="btn btn-lg btn-outline-secondary rounded-circle" style="margin-left: 75px;">
+                    <span id="vid_mute_icon" class="material-icons pt-2">
+                        videocam
+                    </span>
+                </button>
+
+                <button id="call_end" class="btn btn-lg btn-danger rounded-circle" style="margin-left: 75px;">
+                    <span class="material-icons pt-2">
+                        call_end
+                    </span>
+                </button>
+
+                <button id="bttn_help" class="btn btn-lg btn-outline-secondary rounded-circle" style="margin-left: 95px;">
+                    <span id="help_icon" class="material-icons pt-2">
+                        help_outline
+                    </span>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="image-container">
+            <img src="{{url_for('static', filename='Fingerabduction.png')}}" class="small-image" />
+        </div>
+
+        <div id="currentExerciseTable" class="currentExerciseTable"></div>
+
+        <br>
+
+        <video id="videoCamera" autoplay style="display: none"></video>
+        <div style="visibility: hidden;" class="control">  </div>
+
+        <script src="{{url_for('static', filename='init.js')}}"></script>
+        <script src="{{url_for('static', filename='exercise.js')}}"></script>
+        <script src="{{url_for('static', filename='videoroom_patient.js')}}"></script>
+
+</body>
+</html>
